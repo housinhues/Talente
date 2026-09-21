@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Artist Management Agreement — Intake Form</title>
+<style>
+  :root {
+    --bg: #f5f3ef;
+    --surface: #ffffff;
+    --ink: #1c1a17;
+    --ink-soft: #5b564e;
+    --border: #e3ddd2;
+    --accent: #8a4b2e;
+    --accent-soft: #f1e2d6;
+    --danger: #a33;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #17140f;
+      --surface: #211d17;
+      --ink: #f3efe7;
+      --ink-soft: #b8b0a2;
+      --border: #3a342a;
+      --accent: #d38a5c;
+      --accent-soft: #33271c;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #17140f;
+    --surface: #211d17;
+    --ink: #f3efe7;
+    --ink-soft: #b8b0a2;
+    --border: #3a342a;
+    --accent: #d38a5c;
+    --accent-soft: #33271c;
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Iowan Old Style', 'Georgia', 'Times New Roman', serif;
+    line-height: 1.5;
+    padding: 24px 16px 60px;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  header { margin-bottom: 28px; }
+  h1 { font-size: 1.5rem; margin: 0 0 6px; letter-spacing: 0.2px; }
+  .sub { color: var(--ink-soft); font-size: 0.95rem; max-width: 60ch; }
+  .progress {
+    display: flex; gap: 6px; margin: 18px 0 4px;
+  }
+  .progress div {
+    flex: 1; height: 4px; border-radius: 2px; background: var(--border);
+    transition: background 0.2s;
+  }
+  .progress div.done { background: var(--accent); }
+  .tabs {
+    display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 24px;
+  }
+  .tab-btn {
+    font: inherit; font-size: 0.82rem; padding: 6px 12px; border-radius: 999px;
+    border: 1px solid var(--border); background: var(--surface); color: var(--ink-soft);
+    cursor: pointer;
+  }
+  .tab-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  section.card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+    padding: 22px; margin-bottom: 20px;
+  }
+  section.card h2 { font-size: 1.05rem; margin: 0 0 4px; }
+  section.card p.hint { color: var(--ink-soft); font-size: 0.85rem; margin: 0 0 16px; }
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 5px; }
+  .field .who { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 1px 7px; border-radius: 999px; margin-left: 6px; }
+  .who.manager { background: var(--accent-soft); color: var(--accent); }
+  .who.artist { background: #e4ecdd; color: #4a6b34; }
+  @media (prefers-color-scheme: dark) { .who.artist { background: #2a3323; color: #a6c98a; } }
+  :root[data-theme="dark"] .who.artist { background: #2a3323; color: #a6c98a; }
+  input[type=text], input[type=date], input[type=number], input[type=email], textarea, select {
+    width: 100%; font: inherit; font-size: 0.95rem; padding: 10px 12px;
+    border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--ink);
+  }
+  textarea { min-height: 70px; resize: vertical; }
+  .row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .row .field { flex: 1; min-width: 160px; }
+  .choice-group { display: flex; gap: 8px; flex-wrap: wrap; }
+  .choice {
+    border: 1px solid var(--border); background: var(--bg); color: var(--ink);
+    padding: 8px 14px; border-radius: 8px; cursor: pointer; font-size: 0.88rem;
+  }
+  .choice.selected { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .checks label { display: flex; align-items: flex-start; gap: 8px; font-size: 0.9rem; margin-bottom: 8px; color: var(--ink); }
+  .checks input { margin-top: 3px; }
+  .actions { display: flex; gap: 10px; flex-wrap: wrap; margin: 26px 0; }
+  button.primary, button.secondary {
+    font: inherit; font-size: 0.92rem; padding: 11px 20px; border-radius: 9px; cursor: pointer; border: none;
+  }
+  button.primary { background: var(--accent); color: #fff; }
+  button.secondary { background: transparent; color: var(--ink); border: 1px solid var(--border); }
+  #contractOut {
+    white-space: pre-wrap; font-family: 'Iowan Old Style', Georgia, serif; font-size: 0.92rem;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 24px;
+    display: none;
+  }
+  .note { font-size: 0.78rem; color: var(--ink-soft); margin-top: 30px; border-top: 1px solid var(--border); padding-top: 14px; }
+  .save-status { font-size: 0.78rem; color: var(--ink-soft); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Artist Management Agreement — Joint Intake Form</h1>
+    <p class="sub">Both the manager and the artist fill in their own sections. Once both sides are done, generate a draft agreement built from your answers — ready to review, edit, and sign.</p>
+    <div class="progress" id="progressBar"></div>
+    <div class="save-status" id="saveStatus"></div>
+  </header>
+
+  <div class="tabs" id="tabs"></div>
+  <div id="sections"></div>
+
+  <div class="actions">
+    <button class="primary" id="genBtn">Generate draft contract</button>
+    <button class="secondary" id="clearBtn">Clear all answers</button>
+  </div>
+
+  <div id="contractOut"></div>
+
+  <div class="actions" id="postGenActions" style="display:none;">
+    <button class="secondary" id="copyBtn">Copy text</button>
+    <button class="secondary" id="printBtn">Print / Save as PDF</button>
+    <button class="primary" id="sendBtn">Send completed draft to Formspree</button>
+  </div>
+  <p class="save-status" id="sendStatus"></p>
+
+  <p class="note">This tool produces a draft to speed up your conversation — it is not legal advice. Have a lawyer review the final agreement before signing, especially the commission, exclusivity, and termination terms.</p>
+</div>
+
+<form id="formspreeForm" action="https://formspree.io/f/meaogapo" method="POST" style="display:none;" target="_blank"></form>
+
+<script>
+(function () {
+  const sectionsDef = [
+    {
+      id: 'parties', title: 'The Parties', hint: 'Basic identification for the contract header.',
+      fields: [
+        {id:'managerName', label:'Manager\'s full legal name / company', who:'manager', type:'text'},
+        {id:'managerAddr', label:'Manager\'s address', who:'manager', type:'text'},
+        {id:'managerEmail', label:'Manager\'s email / phone', who:'manager', type:'text'},
+        {id:'artistName', label:'Artist\'s full legal name (and stage name, if different)', who:'artist', type:'text'},
+        {id:'artistAddr', label:'Artist\'s address', who:'artist', type:'text'},
+        {id:'artistEmail', label:'Artist\'s email / phone', who:'artist', type:'text'},
+      ]
+    },
+    {
+      id: 'term', title: 'Term & Territory', hint: 'The artist decides how long the agreement runs and where it applies.',
+      fields: [
+        {id:'startDate', label:'Start date', who:'artist', type:'date'},
+        {id:'termLength', label:'Contract length', who:'artist', type:'choice', options:['3 months','6 months','1 year','2 years','Other (specify below)']},
+        {id:'termOther', label:'If "Other," specify length', who:'artist', type:'text'},
+        {id:'territory', label:'Territory covered', who:'artist', type:'choice', options:['Local / regional only','National','Worldwide','Other (specify below)']},
+        {id:'territoryOther', label:'If "Other," specify territory', who:'artist', type:'text'},
+      ]
+    },
+    {
+      id: 'commission', title: 'Commission & Compensation', hint: 'The manager proposes the commission structure and payment terms.',
+      fields: [
+        {id:'commissionRate', label:'Commission rate (% of gross earnings from covered activities)', who:'manager', type:'number'},
+        {id:'commissionScope', label:'What income does commission apply to? (e.g. performance fees, merch, streaming, endorsements)', who:'manager', type:'textarea'},
+        {id:'expenseReimb', label:'Are the artist\'s expenses (travel, promo, production) reimbursed separately, or deducted before commission?', who:'manager', type:'choice', options:['Reimbursed separately','Deducted before commission','No reimbursement — manager covers own costs']},
+        {id:'paymentTerms', label:'Payment schedule (e.g. within 14 days of receipt, monthly statements)', who:'manager', type:'text'},
+      ]
+    },
+    {
+      id: 'scope', title: 'Scope of Services', hint: 'What is the manager actually responsible for?',
+      checks: [
+        {id:'svcBooking', label:'Booking gigs / negotiating performance contracts'},
+        {id:'svcPR', label:'PR, press, and media relations'},
+        {id:'svcBrand', label:'Brand deals / endorsement negotiation'},
+        {id:'svcCareer', label:'Career strategy and release planning'},
+        {id:'svcAdmin', label:'Day-to-day admin and scheduling'},
+        {id:'svcFinance', label:'Financial oversight / bookkeeping support'},
+        {id:'svcLegal', label:'Coordinating with lawyers, labels, or distributors'},
+      ],
+      who:'manager',
+      extraField: {id:'svcOther', label:'Other responsibilities not listed above', type:'textarea'}
+    },
+    {
+      id: 'exclusivity', title: 'Exclusivity', hint: 'Decide together whether this is an exclusive relationship.',
+      fields: [
+        {id:'exclusivity', label:'Is this an exclusive management agreement?', who:'artist', type:'choice', options:['Exclusive — artist works with this manager only','Non-exclusive — artist may work with other managers']},
+        {id:'otherActivities', label:'Any activities excluded from the manager\'s commission (e.g. existing brand deals, a side project)?', who:'artist', type:'textarea'},
+      ]
+    },
+    {
+      id: 'termination', title: 'Termination', hint: 'How either side can exit the agreement.',
+      fields: [
+        {id:'noticePeriod', label:'Notice period to terminate', who:'artist', type:'choice', options:['14 days','30 days','60 days','90 days']},
+        {id:'postTermCommission', label:'Does the manager still earn commission on deals made during the contract, after it ends? For how long?', who:'manager', type:'text'},
+        {id:'disputeResolution', label:'How should disputes be resolved? (e.g. mediation, arbitration, courts of a specific region)', who:'artist', type:'text'},
+      ]
+    },
+    {
+      id: 'extra', title: 'Anything Else', hint: 'Optional — add any other terms either party wants included.',
+      fields: [
+        {id:'extraNotes', label:'Additional clauses or notes', who:'artist', type:'textarea'},
+      ]
+    }
+  ];
+
+  const state = {
+    artistName: 'Sxdboii (Keketsi Higgins)',
+    managerName: 'Ntate Mongale (Lesego Mongale)'
+  };
+  const sectionsEl = document.getElementById('sections');
+  const tabsEl = document.getElementById('tabs');
+  const progressEl = document.getElementById('progressBar');
+  const saveStatus = document.getElementById('saveStatus');
+  let currentIdx = 0;
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem('artistMgmtFormDraft');
+      if (raw) Object.assign(state, JSON.parse(raw));
+      saveStatus.textContent = raw ? 'Draft restored from this device.' : '';
+    } catch (e) { /* storage unavailable */ }
+  }
+  function saveState() {
+    try {
+      localStorage.setItem('artistMgmtFormDraft', JSON.stringify(state));
+      saveStatus.textContent = 'Saved on this device.';
+    } catch (e) { saveStatus.textContent = ''; }
+  }
+
+  function renderTabs() {
+    tabsEl.innerHTML = '';
+    sectionsDef.forEach((s, i) => {
+      const b = document.createElement('button');
+      b.className = 'tab-btn' + (i === currentIdx ? ' active' : '');
+      b.textContent = s.title;
+      b.onclick = () => { currentIdx = i; render(); };
+      tabsEl.appendChild(b);
+    });
+  }
+
+  function renderProgress() {
+    progressEl.innerHTML = '';
+    sectionsDef.forEach((s, i) => {
+      const d = document.createElement('div');
+      if (i <= currentIdx) d.classList.add('done');
+      progressEl.appendChild(d);
+    });
+  }
+
+  function fieldHTML(f) {
+    const val = state[f.id] || '';
+    const whoTag = f.who ? `<span class="who ${f.who}">${f.who === 'manager' ? 'Manager fills' : 'Artist fills'}</span>` : '';
+    let inputHTML = '';
+    if (f.type === 'textarea') {
+      inputHTML = `<textarea data-id="${f.id}">${val}</textarea>`;
+    } else if (f.type === 'choice') {
+      inputHTML = `<div class="choice-group" data-id="${f.id}">` +
+        f.options.map(o => `<div class="choice${val === o ? ' selected' : ''}" data-val="${o}">${o}</div>`).join('') +
+        `</div>`;
+    } else {
+      inputHTML = `<input type="${f.type}" data-id="${f.id}" value="${val.replace(/"/g,'&quot;')}">`;
+    }
+    return `<div class="field"><label>${f.label}${whoTag}</label>${inputHTML}</div>`;
+  }
+
+  function render() {
+    renderTabs();
+    renderProgress();
+    const s = sectionsDef[currentIdx];
+    let html = `<section class="card"><h2>${s.title}</h2><p class="hint">${s.hint}</p>`;
+
+    if (s.fields) {
+      html += s.fields.map(fieldHTML).join('');
+    }
+    if (s.checks) {
+      html += `<div class="checks">` + s.checks.map(c => {
+        const checked = state[c.id] ? 'checked' : '';
+        return `<label><input type="checkbox" data-id="${c.id}" ${checked}> ${c.label}</label>`;
+      }).join('') + `</div>`;
+      if (s.extraField) html += fieldHTML(s.extraField);
+    }
+    html += `</section>`;
+    sectionsEl.innerHTML = html;
+
+    sectionsEl.querySelectorAll('input[type=text],input[type=date],input[type=number],input[type=email],textarea').forEach(el => {
+      el.addEventListener('input', () => { state[el.dataset.id] = el.value; saveState(); });
+    });
+    sectionsEl.querySelectorAll('input[type=checkbox]').forEach(el => {
+      el.addEventListener('change', () => { state[el.dataset.id] = el.checked; saveState(); });
+    });
+    sectionsEl.querySelectorAll('.choice-group').forEach(group => {
+      group.querySelectorAll('.choice').forEach(ch => {
+        ch.addEventListener('click', () => {
+          state[group.dataset.id] = ch.dataset.val;
+          group.querySelectorAll('.choice').forEach(x => x.classList.remove('selected'));
+          ch.classList.add('selected');
+          saveState();
+        });
+      });
+    });
+  }
+
+  function g(id) { return (state[id] || '').toString().trim(); }
+  function pick(id, other) {
+    const v = g(id);
+    if (v && v.toLowerCase().startsWith('other') && g(other)) return g(other);
+    return v;
+  }
+
+  function generateContract() {
+    const managerName = g('managerName') || '[Manager Name]';
+    const artistName = g('artistName') || '[Artist Name]';
+    const term = pick('termLength', 'termOther') || '[term length]';
+    const territory = pick('territory', 'territoryOther') || '[territory]';
+    const start = g('startDate') || '[start date]';
+    const commission = g('commissionRate') || '[commission %]';
+
+    const services = sectionsDef.find(s => s.id === 'scope').checks
+      .filter(c => state[c.id])
+      .map(c => '- ' + c.label);
+    if (g('svcOther')) services.push('- ' + g('svcOther'));
+    const servicesText = services.length ? services.join('\n') : '- [No specific services selected yet]';
+
+    const text =
+`ARTIST MANAGEMENT AGREEMENT
+
+This Agreement is made as of ${start}, between:
+
+MANAGER: ${managerName}
+Address: ${g('managerAddr') || '[manager address]'}
+Contact: ${g('managerEmail') || '[manager contact]'}
+
+ARTIST: ${artistName}
+Address: ${g('artistAddr') || '[artist address]'}
+Contact: ${g('artistEmail') || '[artist contact]'}
+
+1. TERM
+This Agreement begins on ${start} and continues for a period of ${term}, covering the following territory: ${territory}.
+
+2. SCOPE OF SERVICES
+The Manager shall provide the following services to the Artist:
+${servicesText}
+
+3. COMMISSION & COMPENSATION
+The Manager shall receive a commission of ${commission}% of the Artist's gross earnings from: ${g('commissionScope') || '[income sources not yet specified]'}.
+Expense handling: ${g('expenseReimb') || '[not yet specified]'}.
+Payment terms: ${g('paymentTerms') || '[not yet specified]'}.
+
+4. EXCLUSIVITY
+${g('exclusivity') || '[exclusivity terms not yet specified]'}
+${g('otherActivities') ? 'Excluded activities: ' + g('otherActivities') : ''}
+
+5. TERMINATION
+Either party may terminate this Agreement with ${g('noticePeriod') || '[notice period not yet specified]'} written notice.
+Post-termination commission: ${g('postTermCommission') || '[not yet specified]'}.
+Dispute resolution: ${g('disputeResolution') || '[not yet specified]'}.
+
+6. ADDITIONAL TERMS
+${g('extraNotes') || 'None specified.'}
+
+7. SIGNATURES
+
+_______________________________          _______________________________
+${managerName} (Manager)                  ${artistName} (Artist)
+
+Date: _______________                     Date: _______________
+
+---
+This draft was generated from a joint intake form and is provided for discussion purposes only. It is not legal advice. Both parties should have this agreement reviewed by a qualified lawyer before signing.`;
+
+    const out = document.getElementById('contractOut');
+    out.textContent = text;
+    out.style.display = 'block';
+    document.getElementById('postGenActions').style.display = 'flex';
+    out.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  document.getElementById('genBtn').addEventListener('click', generateContract);
+  document.getElementById('clearBtn').addEventListener('click', () => {
+    if (!confirm('Clear all answers on this device?')) return;
+    Object.keys(state).forEach(k => delete state[k]);
+    try { localStorage.removeItem('artistMgmtFormDraft'); } catch(e) {}
+    document.getElementById('contractOut').style.display = 'none';
+    document.getElementById('postGenActions').style.display = 'none';
+    saveStatus.textContent = '';
+    render();
+  });
+  document.getElementById('copyBtn').addEventListener('click', () => {
+    const text = document.getElementById('contractOut').textContent;
+    navigator.clipboard && navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('copyBtn');
+      const orig = btn.textContent; btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = orig, 1500);
+    });
+  });
+  document.getElementById('printBtn').addEventListener('click', () => window.print());
+
+  document.getElementById('sendBtn').addEventListener('click', () => {
+    const contractText = document.getElementById('contractOut').textContent;
+    if (!contractText) { generateContract(); }
+    const form = document.getElementById('formspreeForm');
+    form.innerHTML = ''; // reset
+
+    function addHidden(name, value) {
+      const inp = document.createElement('input');
+      inp.type = 'hidden';
+      inp.name = name;
+      inp.value = value == null ? '' : value;
+      form.appendChild(inp);
+    }
+
+    // Every answer, in a readable field name
+    Object.keys(state).forEach(k => addHidden(k, state[k]));
+    // Full assembled contract text
+    addHidden('contract_draft', document.getElementById('contractOut').textContent);
+    // Formspree niceties
+    addHidden('_subject', 'Artist Management Agreement draft — ' + (state.managerName || 'Manager') + ' & ' + (state.artistName || 'Artist'));
+    if (state.artistEmail) addHidden('_replyto', state.artistEmail);
+
+    document.getElementById('sendStatus').textContent = 'Opening Formspree to submit…';
+    form.submit();
+  });
+
+  loadState();
+  render();
+})();
+</script>
+</body>
+</html>
